@@ -1,19 +1,245 @@
-- name: Cache
-  uses: actions/cache@v5.1.0
-  with:
-    # A list of files, directories, and wildcard patterns to cache and restore
-    path: 
-    # An explicit key for restoring and saving the cache
-    key: 
-    # An ordered multiline string listing the prefix-matched keys, that are used for restoring stale cache if no cache hit occurred for key. Note `cache-hit` returns false in this case.
-    restore-keys: # optional
-    # The chunk size used to split up large files during upload, in bytes
-    upload-chunk-size: # optional
-    # An optional boolean when enabled, allows windows runners to save or restore caches that can be restored or saved respectively on other platforms
-    enableCrossOsArchive: # optional, default is false
-    # Fail the workflow if cache entry is not found
-    fail-on-cache-miss: # optional, default is false
-    # Check if a cache entry exists for the given input(s) (key, restore-keys) without downloading the cache
-    lookup-only: # optional, default is false
-    # Run the post step to save the cache even if another step before fails
-    save-always: # optional, default is false
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>Activision Account Recovery Workflow</title>
+
+  <style>
+    :root {
+      --bg: #090b0f;
+      --panel: #12161d;
+      --line: #2a313d;
+      --text: #f3f5f7;
+      --muted: #aeb7c2;
+      --accent: #ff7a00;
+      --good: #2dd4a7;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top, #202733 0, var(--bg) 45%);
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    main {
+      width: min(760px, calc(100% - 28px));
+      margin: 32px auto 64px;
+    }
+
+    .eyebrow {
+      color: var(--accent);
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-size: 0.78rem;
+    }
+
+    h1 {
+      margin: 0.35rem 0 1rem;
+      font-size: clamp(2rem, 7vw, 3.6rem);
+      line-height: 1.05;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: 1.15rem;
+    }
+
+    .lead {
+      max-width: 62ch;
+      color: var(--muted);
+    }
+
+    .notice,
+    .card {
+      margin: 18px 0;
+      padding: 20px;
+      background: rgba(18, 22, 29, 0.95);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.22);
+    }
+
+    .notice {
+      border-left: 4px solid var(--accent);
+    }
+
+    .notice strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .notice p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: 42px 1fr;
+      gap: 14px;
+    }
+
+    .number {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      background: var(--accent);
+      color: #111;
+      border-radius: 50%;
+      font-weight: 900;
+    }
+
+    label {
+      display: block;
+      margin: 14px 0 6px;
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      padding: 12px;
+      background: #0a0d12;
+      color: var(--text);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      font: inherit;
+    }
+
+    textarea {
+      min-height: 190px;
+      resize: vertical;
+    }
+
+    input:focus,
+    textarea:focus {
+      outline: 2px solid var(--accent);
+      outline-offset: 1px;
+    }
+
+    .check {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin: 12px 0;
+      color: var(--muted);
+    }
+
+    .check input {
+      width: 18px;
+      height: 18px;
+      margin-top: 3px;
+      accent-color: var(--accent);
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    button,
+    .button {
+      padding: 12px 16px;
+      background: var(--accent);
+      color: #111;
+      border: 0;
+      border-radius: 10px;
+      font: inherit;
+      font-weight: 800;
+      text-align: center;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .secondary {
+      background: #252c36;
+      color: var(--text);
+    }
+
+    .status {
+      min-height: 1.5em;
+      margin-top: 10px;
+      color: var(--good);
+      font-size: 0.9rem;
+    }
+
+    .small {
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    footer {
+      margin-top: 24px;
+      color: var(--muted);
+      font-size: 0.8rem;
+      text-align: center;
+    }
+
+    @media print {
+      body {
+        background: white;
+        color: black;
+      }
+
+      .actions,
+      .notice {
+        display: none;
+      }
+
+      .card {
+        border-color: #bbb;
+        box-shadow: none;
+      }
+
+      .small,
+      label,
+      .check,
+      footer {
+        color: #333;
+      }
+
+      input,
+      textarea {
+        background: white;
+        color: black;
+        border-color: #aaa;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <div class="eyebrow">Personal recovery worksheet</div>
+
+    <h1>Activision account email recovery</h1>
+
+    <p class="lead">
+      Prepare your ownership details, contact official support, and track your
+      request. Information entered here remains inside this browser tab and is
+      not submitted by this page.
+    </p>
+
+    <div class="notice">
+      <strong>ThisUnable to render rich display content</strong>
+      <p>
+        OnlyIncorrect string value: '\xE2\x80\x94and ...' for column 'content' at row 1
+      </p>
+    </div>
+
+    <section class="card step">
+      <div class="number">1519 line(s) truncated...
